@@ -12,7 +12,6 @@ all_from 'lib/DBIx/Class/ResultSet/HashRef.pm';
 requires 'DBIx::Class';
 
 test_requires 'Test::More';
-test_requires 'File::Temp';
 
 auto_install;
 WriteAll;

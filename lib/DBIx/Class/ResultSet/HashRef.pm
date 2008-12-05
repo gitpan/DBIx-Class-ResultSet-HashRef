@@ -5,11 +5,11 @@ use strict;
 use base qw( DBIx::Class::ResultSet );
 use DBIx::Class::ResultClass::HashRefInflator;
 
-our $VERSION = '1.000';
+our $VERSION = '1.001';
 
 =head1 NAME
 
-DBIx::Class::ResultSet::HashRef - Adds syntatic sugar to skip the fancy objects
+DBIx::Class::ResultSet::HashRef - Adds syntactic sugar to skip the fancy objects
 
 =head1 SYNOPSIS
 

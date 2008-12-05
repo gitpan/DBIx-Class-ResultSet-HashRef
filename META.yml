@@ -1,16 +1,15 @@
 ---
-abstract: 'Adds syntatic sugar to skip the fancy objects'
+abstract: 'Adds syntactic sugar to skip the fancy objects'
 author:
   - 'Johannes Plunien <plu@cpan.org>'
 build_requires:
-  File::Temp: 0
   Test::More: 0
 distribution_type: module
-generated_by: 'Module::Install version 0.75'
+generated_by: 'Module::Install version 0.77'
 license: perl
 meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.3.html
-  version: 1.3
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
 name: DBIx-Class-ResultSet-HashRef
 no_index:
   directory:
@@ -19,4 +18,6 @@ no_index:
 requires:
   DBIx::Class: 0
   perl: 5.6.1
-version: 1.000
+resources:
+  license: http://dev.perl.org/licenses/
+version: 1.001

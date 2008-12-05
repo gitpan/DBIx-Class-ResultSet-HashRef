@@ -15,11 +15,9 @@ BEGIN {
 
 use lib 't/lib';
 use TestSchema;
-use File::Temp;
 
 # setup
-my ( undef, $db ) = File::Temp::tempfile();
-my $schema = TestSchema->connect( "dbi:SQLite:dbname=${db}", undef, undef );
+my $schema = TestSchema->connect( "dbi:SQLite:dbname=:memory:", undef, undef );
 $schema->deploy;
 
 my @users = qw/root toor daemon operator bin tty/;
