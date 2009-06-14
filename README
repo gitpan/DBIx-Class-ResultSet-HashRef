@@ -5,19 +5,19 @@ NAME
 SYNOPSIS
         # in your resultsource class
         __PACKAGE__->resultset_class( 'DBIx::Class::ResultSet::HashRef' );
-    
-        # in your calling code
+        
+    # in your calling code
         my $rs = $schema->resultset('User')->search( { } )->hashref_rs;
         while (my $row = $rs->next) {
             print Dumper $row;
         }
-    
-        You can chain up every L<DBIx::Class::ResultSet> method to ->hashref_rs:
-    
-        * ->hashref_rs->all (same as ->hashref_array)
+        
+    You can chain up every L<DBIx::Class::ResultSet> method to ->hashref_rs:
+        
+    * ->hashref_rs->all (same as ->hashref_array)
 
         * ->hashref_rs->first (same as ->hashref_first)
-    
+
 DESCRIPTION
     This is a simple way to allow you to set result_class to
     DBIx::Class::ResultClass::HashRefInflator to skip the fancy objects.
@@ -50,8 +50,32 @@ METHODS
         my $first_row = $schema->resultset('User')->search( { } )->hashref_first;
         print Dumper $first_row
 
+  hashref_pk( )
+    Returns a hash or reference to hash, depending on the calling context.
+    The keys of the hash are the primary keys of each row returned by
+    "hashref_array( )":
+
+            {
+                    1 => {
+                        'id'    => '1',
+                        'login' => 'root'
+                    },
+                    2 => {
+                        'id'    => '2',
+                        'login' => 'toor'
+                    },
+            }
+
+    Example usage:
+
+        my $hashref_pk = $schema->resultset('User')->search( { } )->hashref_pk;
+        print Dumper $hashref_pk
+
 AUTHOR
     Johannes Plunien <plu@cpan.org>
+
+CONTRIBUTORS
+    Robert Bohne <rbo@cpan.org>
 
 COPYRIGHT AND LICENSE
     Copyright 2008 by Johannes Plunien
@@ -62,6 +86,7 @@ COPYRIGHT AND LICENSE
     Thanks to mst for his patience.
 
 SEE ALSO
-    * DBIx::Class
-    * DBIx::Class::ResultClass::HashRefInflator
+    *   DBIx::Class
+
+    *   DBIx::Class::ResultClass::HashRefInflator
 

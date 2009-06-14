@@ -10,7 +10,7 @@ BEGIN {
     eval "use SQL::Translator ();";
     plan skip_all => 'SQL::Translator required to run this test' if $@;
 
-    plan( tests => 10 );
+    plan( tests => 11 );
 }
 
 use lib 't/lib';
@@ -310,5 +310,39 @@ foreach my $user (@users) {
             'login' => 'root'
         },
         "hashref_first"
+    );
+}
+
+{
+    my $hashref = $schema->resultset('User')->search( {}, { order_by => 'me.id ASC' } )->hashref_pk;
+    is_deeply(
+        $hashref,
+        {
+            1 => {
+                'id'    => '1',
+                'login' => 'root'
+            },
+            2 => {
+                'id'    => '2',
+                'login' => 'toor'
+            },
+            3 => {
+                'id'    => '3',
+                'login' => 'daemon'
+            },
+            4 => {
+                'id'    => '4',
+                'login' => 'operator'
+            },
+            5 => {
+                'id'    => '5',
+                'login' => 'bin'
+            },
+            6 => {
+                'id'    => '6',
+                'login' => 'tty'
+            }
+        },
+        'hashref_pk'
     );
 }

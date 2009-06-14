@@ -2,10 +2,11 @@ package DBIx::Class::ResultSet::HashRef;
 
 use warnings;
 use strict;
+use Carp;
 use base qw( DBIx::Class::ResultSet );
 use DBIx::Class::ResultClass::HashRefInflator;
 
-our $VERSION = '1.001';
+our $VERSION = '1.002';
 
 =head1 NAME
 
@@ -83,9 +84,47 @@ sub hashref_first {
     return shift->hashref_rs->first;
 }
 
+=head2 hashref_pk( )
+
+Returns a hash or reference to hash, depending on the calling context. The keys of the hash are
+the primary keys of each row returned by L</hashref_array( )>:
+
+	{
+		1 => {
+		    'id'    => '1',
+		    'login' => 'root'
+		},
+		2 => {
+		    'id'    => '2',
+		    'login' => 'toor'
+		},
+	}
+
+Example usage:
+
+    my $hashref_pk = $schema->resultset('User')->search( { } )->hashref_pk;
+    print Dumper $hashref_pk
+
+=cut
+
+sub hashref_pk{
+    my $self = shift;
+    my @primary_columns = $self->result_source->primary_columns;
+    croak "Multi-column primary keys are not supported." if (scalar @primary_columns > 1 );
+    croak "No primary key found." if (scalar @primary_columns == 0 );
+    my $primary_key = shift @primary_columns;
+    my %hash_pk = ();
+    %hash_pk = map { $_->{$primary_key} => $_ } $self->hashref_array;
+    return wantarray ? %hash_pk : \%hash_pk ;
+}
+
 =head1 AUTHOR
 
 Johannes Plunien E<lt>plu@cpan.orgE<gt>
+
+=head1 CONTRIBUTORS
+
+Robert Bohne E<lt>rbo@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
